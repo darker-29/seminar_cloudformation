@@ -11,6 +11,10 @@ Parameters:
   EC2AMIID:
     Type: String
     Default: ami-032d6db78f84e8bf5
+  EC2InstanceType:
+    Type: String
+    Default: t2.micro
+    AllowedValues: [t2.micro, t3.micro]
 
 Resources:
   EC2:
@@ -43,7 +47,9 @@ Resources:
     Properties:
       GroupDescription: Web Security Group
       GroupName: web-secgroup
-      VpcId: !Ref VPC
+      VpcId:
+        Fn::ImportValue:
+          !Sub ${Env}-VpcId
       SecurityGroupIngress:
         - CidrIp: 0.0.0.0/0
           FromPort: 80
