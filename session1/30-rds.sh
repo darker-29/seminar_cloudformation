@@ -7,8 +7,8 @@ CFN_TEMPLATE=$PWD/rds.yml
 
 aws cloudformation deploy \
     --stack-name ${CFN_STACK_NAME} \
-    --template-body file://${CFN_TEMPLATE}
-    --parameter-override \
+    --template-file ${CFN_TEMPLATE} \
+    --parameter-overrides \
     Parameterkey=Env,ParameterValue=${ENV} \
     Parameterkey=DBInstanceType,ParameterValue=${DB_INSTANCE_TYPE} \
     Parameterkey=DBMasterUserPassword,ParameterValue=${DB_PASSWORD} \
