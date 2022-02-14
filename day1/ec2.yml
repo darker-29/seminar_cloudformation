@@ -28,7 +28,7 @@ Resources:
           - 1
           - Fn::GetAZs: !Ref AWS::Region
       ImageId: !Ref EC2AMIID
-      InstanceType: !Ref InstanceType
+      InstanceType: !Ref EC2InstanceType
       KeyName: !Ref KeyName
       SecurityGroups:
         Fn::ImportValue:
