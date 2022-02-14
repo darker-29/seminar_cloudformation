@@ -10,17 +10,6 @@ Parmeters:
     Default: test
 
 Resources:
-  Repository:
-    Type: AWS::CodeCommit::Repository
-    Properties:
-      RepositoryName: !Sub ${Env}-app
-      RepositoryDescription: !Sub ${Env} Application Repository
-      Code:
-        BranchName: !Ref TargetBranch
-      Tags:
-        - Key: Name
-          Value: !Sub ${Env}-app
-
   CodePipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
@@ -30,7 +19,7 @@ Resources:
         Type: S3
         Location: 
           Fn::ImportValue:
-            !Sub ${Env}-artifact
+            !Sub ${Env}-CodeArtifact
             #EncryptionKey:
             #  Id: CHANGEME
             #  Type: KMS
@@ -108,132 +97,54 @@ Resources:
         - Key: Name
           Value: !Sub ${Env}-codepipeline
 
-  BuildProject:
+  CodeBuild:
     Type: AWS::CodeBuild::Project
     Properties:
+      Name: CHANGEME # Optional
+      Description: !Sub ${Env} Build
       Artifacts:
-        ArtifactIdentifier: CHANGEME # Optional
+        Type: S3
+        Location: 
+        ArtifactIdentifier: !Sub ${Env}Build
         EncryptionDisabled: false # Optional
-        Location: CHANGEME # Optional
-        Name: CHANGEME # Optional
-        NamespaceType: CHANGEME # Optional
-        OverrideArtifactName: false # Optional
-        Packaging: CHANGEME # Optional
+        Name: !Sub ${Env}Build
+        NamespaceType: App
+        Packaging: ZIP
         Path: CHANGEME # Optional
-        Type: CHANGEME
-      BadgeEnabled: false # Optional
-      BuildBatchConfig: # Optional
-        CombineArtifacts: false # Optional
-        Restrictions: # Optional
-          ComputeTypesAllowed: # Optional
-            - CHANGEME
-          MaximumBuildsAllowed: 0 # Optional
-        ServiceRole: CHANGEME # Optional
-        TimeoutInMins: 0 # Optional
-      Cache: # Optional
-        Location: CHANGEME # Optional
-        Modes: # Optional
-          - CHANGEME
-        Type: CHANGEME
-      ConcurrentBuildLimit: 0 # Optional
-      Description: CHANGEME # Optional
-      EncryptionKey: CHANGEME # Optional
+          # EncryptionKey: CHANGEME # Optional
       Environment:
-        Certificate: CHANGEME # Optional
-        ComputeType: CHANGEME
-        EnvironmentVariables: # Optional
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        EnvironmentVariables:
           - Name: CHANGEME
             Type: CHANGEME # Optional
             Value: CHANGEME
-        Image: CHANGEME
-        ImagePullCredentialsType: CHANGEME # Optional
-        PrivilegedMode: false # Optional
-        RegistryCredential: # Optional
-          Credential: CHANGEME
-          CredentialProvider: CHANGEME
-        Type: CHANGEME
-      FileSystemLocations:
-        - Identifier: CHANGEME
-          Location: CHANGEME
-          MountOptions: CHANGEME # Optional
-          MountPoint: CHANGEME
-          Type: CHANGEME
-      LogsConfig: # Optional
-        CloudWatchLogs: # Optional
-          GroupName: CHANGEME # Optional
-          Status: CHANGEME
-          StreamName: CHANGEME # Optional
-        S3Logs: # Optional
-          EncryptionDisabled: false # Optional
-          Location: CHANGEME # Optional
-          Status: CHANGEME
-      Name: CHANGEME # Optional
-      QueuedTimeoutInMinutes: 0 # Optional
-      SecondaryArtifacts:
-        - ArtifactIdentifier: CHANGEME # Optional
-          EncryptionDisabled: false # Optional
-          Location: CHANGEME # Optional
-          Name: CHANGEME # Optional
-          NamespaceType: CHANGEME # Optional
-          OverrideArtifactName: false # Optional
-          Packaging: CHANGEME # Optional
-          Path: CHANGEME # Optional
-          Type: CHANGEME
-      SecondarySourceVersions:
-        - SourceIdentifier: CHANGEME
-          SourceVersion: CHANGEME # Optional
-      SecondarySources:
-        - Auth: # Optional
-            Resource: CHANGEME # Optional
-            Type: CHANGEME
-          BuildSpec: CHANGEME # Optional
-          BuildStatusConfig: # Optional
-            Context: CHANGEME # Optional
-            TargetUrl: CHANGEME # Optional
-          GitCloneDepth: 0 # Optional
-          GitSubmodulesConfig: # Optional
-            FetchSubmodules: false
-          InsecureSsl: false # Optional
-          Location: CHANGEME # Optional
-          ReportBuildStatus: false # Optional
-          SourceIdentifier: CHANGEME # Optional
-          Type: CHANGEME
+          - Name: CHANGEME
+            Type: CHANGEME # Optional
+            Value: CHANGEME
+          - Name: CHANGEME
+            Type: CHANGEME # Optional
+            Value: CHANGEME
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: CodeBuild
+          StreamName: !Sub ${Env}
+          Status: ENABLED
       ServiceRole: CHANGEME
       Source:
-        Auth: # Optional
-          Resource: CHANGEME # Optional
-          Type: CHANGEME
-        BuildSpec: CHANGEME # Optional
-        BuildStatusConfig: # Optional
-          Context: CHANGEME # Optional
-          TargetUrl: CHANGEME # Optional
-        GitCloneDepth: 0 # Optional
-        GitSubmodulesConfig: # Optional
-          FetchSubmodules: false
-        InsecureSsl: false # Optional
-        Location: CHANGEME # Optional
-        ReportBuildStatus: false # Optional
-        SourceIdentifier: CHANGEME # Optional
-        Type: CHANGEME
-      SourceVersion: CHANGEME # Optional
-      Tags:
-        - Key: CHANGEME
-          Value: CHANGEME
-      TimeoutInMinutes: 0 # Optional
-      Triggers: # Optional
-        BuildType: CHANGEME # Optional
-        FilterGroups: # Optional
-          - - ExcludeMatchedPattern: false # Optional
-              Pattern: CHANGEME
-              Type: CHANGEME
-        Webhook: false # Optional
-      VpcConfig: # Optional
-        SecurityGroupIds: # Optional
+        Type: CODECOMMIT
+        SourceIdentifier: !Sub ${Env}-build
+        Location: !GetAtt Repository.CloneUrlHttp
+        BuildSpec: buildspec.yml
+      TimeoutInMinutes: 120
+      VpcConfig:
+        SecurityGroupIds:
           - CHANGEME
-        Subnets: # Optional
+        Subnets:
           - CHANGEME
         VpcId: CHANGEME # Optional
-
-
+      Tags:
+        - Key: Name
+          Value: !Sub ${Env}-build
 
 

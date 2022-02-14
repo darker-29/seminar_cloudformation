@@ -10,7 +10,7 @@ Parameters:
     Default: bucket
 
 Resources:
-  S3Bucket:
+  ContentsBucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub ${Env}-${S3BucketName}
@@ -32,4 +32,27 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${Env}-${S3BucketName}
+
+  ArtifactBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${Env}-CodeArtifact
+      AccessControl: Private
+      ObjectLockEnabled: false
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Disabled
+      LifecycleConfiguration:
+        Rules:
+          Status: Enabled
+          Transitions:
+            StorageClass: GLACIER
+            TransitionInDays: 30
+      Tags:
+        - Key: Name
+          Value: !Sub ${Env}-CodeArtifact
 
