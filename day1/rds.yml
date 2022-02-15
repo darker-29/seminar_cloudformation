@@ -23,12 +23,12 @@ Resources:
       MultiAZ: false
       DBInstanceClass: db.t3.micro
       DBInstanceIdentifier: !Ref Env
-      Engine: postgres
-      EngineVersion: 13.5
+      Engine: mysql
+      EngineVersion: 8
       MasterUserPassword: testpass
       MasterUsername: testuser
       DBName: test
-      Port: 5432
+      Port: 3306
       StorageType: standard
       AllocatedStorage: 20
       DBSubnetGroupName: !Ref DBSubnetGroup
@@ -68,9 +68,9 @@ Resources:
         - SourceSecurityGroupId:
             Fn::ImportValue:
               !Sub ${Env}-WebSecurityGroup
-          FromPort: 5432
+          FromPort: 3306
           IpProtocol: tcp
-          ToPort: 5432
+          ToPort: 3306
       Tags:
         - Key: Name
           Value: !Sub ${Env}-db-secgroup
@@ -90,7 +90,7 @@ Resources:
     Type: AWS::RDS::DBParameterGroup
     Properties:
       Description: test db parametergroup
-      Family: postgres13
+      Family: mysql8
         #Parameters:
         #  CHANGEME:
       Tags:
