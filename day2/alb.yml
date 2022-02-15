@@ -10,61 +10,34 @@ Resources:
   ApplicationLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      IpAddressType: CHANGEME # Optional
-      LoadBalancerAttributes:
-        - Key: CHANGEME # Optional
-          Value: CHANGEME # Optional
-      Name: CHANGEME # Optional
-      Scheme: CHANGEME # Optional
+      Name: !Sub ${Env}-alb
+      Type: alb
+      IpAddressType: dualstack
       SecurityGroups:
-        - CHANGEME
+        - Fn::ImportValue:
+            !Sub ${Env}-ALBSecurityGroup
       SubnetMappings:
         - AllocationId: CHANGEME # Optional
           IPv6Address: CHANGEME # Optional
           PrivateIPv4Address: CHANGEME # Optional
           SubnetId: CHANGEME
       Subnets:
-        - CHANGEME
+        - Fn::ImportValue:
+          !Sub ${Env}-PublicSubnet1a
+        - Fn::ImportValue:
+          !Sub ${Env}-PublicSubnet1c
       Tags:
         - Key: CHANGEME
           Value: CHANGEME
-      Type: CHANGEME # Optional
 
   ALB80Listener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
-      AlpnPolicy:
-        - CHANGEME
-      Certificates:
-        - CertificateArn: CHANGEME # Optional
+      LoadBalancerArn: !Ref ApplicationLoadBalancer
+      Protocol: HTTP
+      Port: 80
       DefaultActions:
-        - AuthenticateCognitoConfig: # Optional
-            AuthenticationRequestExtraParams: # Optional
-              CHANGEME: CHANGEME
-            OnUnauthenticatedRequest: CHANGEME # Optional
-            Scope: CHANGEME # Optional
-            SessionCookieName: CHANGEME # Optional
-            SessionTimeout: CHANGEME # Optional
-            UserPoolArn: CHANGEME
-            UserPoolClientId: CHANGEME
-            UserPoolDomain: CHANGEME
-          AuthenticateOidcConfig: # Optional
-            AuthenticationRequestExtraParams: # Optional
-              CHANGEME: CHANGEME
-            AuthorizationEndpoint: CHANGEME
-            ClientId: CHANGEME
-            ClientSecret: CHANGEME
-            Issuer: CHANGEME
-            OnUnauthenticatedRequest: CHANGEME # Optional
-            Scope: CHANGEME # Optional
-            SessionCookieName: CHANGEME # Optional
-            SessionTimeout: CHANGEME # Optional
-            TokenEndpoint: CHANGEME
-            UserInfoEndpoint: CHANGEME
-          FixedResponseConfig: # Optional
-            ContentType: CHANGEME # Optional
-            MessageBody: CHANGEME # Optional
-            StatusCode: CHANGEME
+        - Type: CHANGEME
           ForwardConfig: # Optional
             TargetGroupStickinessConfig: # Optional
               DurationSeconds: 0 # Optional
@@ -73,55 +46,20 @@ Resources:
               - TargetGroupArn: CHANGEME # Optional
                 Weight: 0 # Optional
           Order: 0 # Optional
-          RedirectConfig: # Optional
-            Host: CHANGEME # Optional
-            Path: CHANGEME # Optional
-            Port: CHANGEME # Optional
-            Protocol: CHANGEME # Optional
-            Query: CHANGEME # Optional
-            StatusCode: CHANGEME
-          TargetGroupArn: CHANGEME # Optional
-          Type: CHANGEME
-      LoadBalancerArn: CHANGEME
-      Port: 0 # Optional
-      Protocol: CHANGEME # Optional
-      SslPolicy: CHANGEME # Optional
 
   ALB443Listener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
-      AlpnPolicy:
-        - CHANGEME
+      LoadBalancerArn: !Ref ApplicationLoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      SslPolicy: CHANGEME # Optional
       Certificates:
-        - CertificateArn: CHANGEME # Optional
+        - CertificateArn:
+          Fn::ImportValue:
+            !Sub ${Env}-Certificate
       DefaultActions:
-        - AuthenticateCognitoConfig: # Optional
-            AuthenticationRequestExtraParams: # Optional
-              CHANGEME: CHANGEME
-            OnUnauthenticatedRequest: CHANGEME # Optional
-            Scope: CHANGEME # Optional
-            SessionCookieName: CHANGEME # Optional
-            SessionTimeout: CHANGEME # Optional
-            UserPoolArn: CHANGEME
-            UserPoolClientId: CHANGEME
-            UserPoolDomain: CHANGEME
-          AuthenticateOidcConfig: # Optional
-            AuthenticationRequestExtraParams: # Optional
-              CHANGEME: CHANGEME
-            AuthorizationEndpoint: CHANGEME
-            ClientId: CHANGEME
-            ClientSecret: CHANGEME
-            Issuer: CHANGEME
-            OnUnauthenticatedRequest: CHANGEME # Optional
-            Scope: CHANGEME # Optional
-            SessionCookieName: CHANGEME # Optional
-            SessionTimeout: CHANGEME # Optional
-            TokenEndpoint: CHANGEME
-            UserInfoEndpoint: CHANGEME
-          FixedResponseConfig: # Optional
-            ContentType: CHANGEME # Optional
-            MessageBody: CHANGEME # Optional
-            StatusCode: CHANGEME
+        - Type: CHANGEME
           ForwardConfig: # Optional
             TargetGroupStickinessConfig: # Optional
               DurationSeconds: 0 # Optional
@@ -130,58 +68,31 @@ Resources:
               - TargetGroupArn: CHANGEME # Optional
                 Weight: 0 # Optional
           Order: 0 # Optional
-          RedirectConfig: # Optional
-            Host: CHANGEME # Optional
-            Path: CHANGEME # Optional
-            Port: CHANGEME # Optional
-            Protocol: CHANGEME # Optional
-            Query: CHANGEME # Optional
-            StatusCode: CHANGEME
-          TargetGroupArn: CHANGEME # Optional
-          Type: CHANGEME
-      LoadBalancerArn: CHANGEME
-      Port: 0 # Optional
-      Protocol: CHANGEME # Optional
-      SslPolicy: CHANGEME # Optional
 
   ALBTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      HealthCheckEnabled: false # Optional
-      HealthCheckIntervalSeconds: 0 # Optional
-      HealthCheckPath: CHANGEME # Optional
-      HealthCheckPort: CHANGEME # Optional
-      HealthCheckProtocol: CHANGEME # Optional
-      HealthCheckTimeoutSeconds: 0 # Optional
-      HealthyThresholdCount: 0 # Optional
-      Matcher: # Optional
-        GrpcCode: CHANGEME # Optional
-        HttpCode: CHANGEME # Optional
-      Name: CHANGEME # Optional
-      Port: 0 # Optional
-      Protocol: CHANGEME # Optional
-      ProtocolVersion: CHANGEME # Optional
-      Tags:
-        - Key: CHANGEME
-          Value: CHANGEME
-      TargetGroupAttributes:
-        - Key: CHANGEME # Optional
-          Value: CHANGEME # Optional
+      Name: !Sub ${Env}-targetgroup
+      VpcId:
+        Fn::ImportValue:
+          !Sub ${Env}-VpcId
       TargetType: CHANGEME # Optional
       Targets:
         - AvailabilityZone: CHANGEME # Optional
           Id: CHANGEME
           Port: 0 # Optional
-      UnhealthyThresholdCount: 0 # Optional
-      VpcId: CHANGEME # Optional
-
-Outputs:
-  MyTargetGroupLoadBalancerArns:
-    Value: !GetAtt MyTargetGroup.LoadBalancerArns
-
-  MyTargetGroupTargetGroupFullName:
-    Value: !GetAtt MyTargetGroup.TargetGroupFullName
-
-  MyTargetGroupTargetGroupName:
-    Value: !GetAtt MyTargetGroup.TargetGroupName
+      Protocol: HTTP
+      ProtocolVersion: CHANGEME # Optional
+      Port: 80
+      HealthCheckEnabled: true
+      HealthCheckIntervalSeconds: 60
+      HealthCheckPath: /healthcheck.php
+      HealthCheckPort: 80
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 3
+      UnhealthyThresholdCount: 0
+      Tags:
+        - Key: Name
+          Value: !Sub ${Env}-targetgroup
 

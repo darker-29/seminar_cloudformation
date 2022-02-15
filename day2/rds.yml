@@ -16,25 +16,6 @@ Parameters:
     Type: String
 
 Resources:
-  DBSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: DB Security Group
-      GroupName: !Sub ${Env}-db-secgroup
-      VpcId:
-        Fn::ImportValue:
-          !Sub ${Env}-VpcId
-      SecurityGroupIngress:
-        - SourceSecurityGroupId:
-            Fn::ImportValue:
-              !Sub ${Env}-WebSecurityGroup
-          FromPort: 5432
-          IpProtocol: tcp
-          ToPort: 5432
-      Tags:
-        - Key: Name
-          Value: !Sub ${Env}-db-secgroup
-
   DBInstance:
     Type: AWS::RDS::DBInstance
     Properties:
@@ -75,16 +56,35 @@ Resources:
         # MonitoringInterval: 0 # Optional
         # MonitoringRoleArn: CHANGEME # Optional
 
+  DBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: DB Security Group
+      GroupName: !Sub ${Env}-db-secgroup
+      VpcId:
+        Fn::ImportValue:
+          !Sub ${Env}-VpcId
+      SecurityGroupIngress:
+        - SourceSecurityGroupId:
+            Fn::ImportValue:
+              !Sub ${Env}-WebSecurityGroup
+          FromPort: 5432
+          IpProtocol: tcp
+          ToPort: 5432
+      Tags:
+        - Key: Name
+          Value: !Sub ${Env}-db-secgroup
+
   DBSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
     Properties:
       DBSubnetGroupName: !Sub ${Env}-dbsubnet
       DBSubnetGroupDescription: test subnet group
       SubnetIds:
-        - Fn::ImportValue
-          !Sub ${Env}-PrivateSubnet1a
-        - Fn::ImportValue
-          !Sub ${Env}-PrivateSubnet1c
+        - Fn::ImportValue:
+            !Sub ${Env}-PrivateSubnet1a
+        - Fn::ImportValue:
+            !Sub ${Env}-PrivateSubnet1c
 
   DBParameterGroup:
     Type: AWS::RDS::DBParameterGroup

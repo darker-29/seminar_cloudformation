@@ -9,7 +9,7 @@ Parameters:
     Type: String
 
 Resources:
-  MyCertificate:
+  Certificate:
     Type: AWS::CertificateManager::Certificate
     Properties:
       DomainName: !Ref Domain
@@ -25,3 +25,8 @@ Resources:
         - Key: Name
           Value: !Sub ${Env}-acm
 
+Outputs:
+  Certificate:
+    Value: !Ref Certificate
+    Export:
+      Name: !Sub ${Env}-Certificate

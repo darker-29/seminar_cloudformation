@@ -1,6 +1,13 @@
-@#!/bin/bash
+#!/bin/bash
 
 source ./.env
+
+CHANGESET_OPTION="--no-execute-changeset"
+
+if [ $# = 1 ] && [ $1 = "deploy" ]; then
+  echo "deploy mode"
+  CHANGESET_OPTION=""
+fi
 
 CFN_STACK_NAME=${ENV}-rds
 CFN_TEMPLATE=$PWD/rds.yml
@@ -8,11 +15,12 @@ CFN_TEMPLATE=$PWD/rds.yml
 aws cloudformation deploy \
     --stack-name ${CFN_STACK_NAME} \
     --template-file ${CFN_TEMPLATE} \
+    --capabilities CAPABILITY_IAM \
     --parameter-overrides \
-    Parameterkey=Env,ParameterValue=${ENV} \
-    Parameterkey=DBInstanceType,ParameterValue=${DB_INSTANCE_TYPE} \
-    Parameterkey=DBMasterUserPassword,ParameterValue=${DB_PASSWORD} \
-    Parameterkey=DBMasterUserName,ParameterValue=${DB_USERNAME} \
-    Parameterkey=DBName,ParameterValue=${DB_NAME} \
+    Env=${ENV} \
+    DBInstanceType=${DB_INSTANCE_TYPE} \
+    DBMasterUserName=${DB_USERNAME} \
+    DBMasterUserPassword=${DB_PASSWORD} \
+    DBName=${DB_NAME}
 
 exit 0

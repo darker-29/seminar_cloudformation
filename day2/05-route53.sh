@@ -2,6 +2,14 @@
 
 source ./.env
 
+CHANGESET_OPTION="--no-execute-changeset"
+
+if [ $# = 1 ] && [ $1 = "deploy" ]; then
+  echo "deploy mode"
+  CHANGESET_OPTION=""
+fi
+
+
 CFN_STACK_NAME=${ENV}-route53
 CFN_TEMPLATE=$PWD/route53.yml
 

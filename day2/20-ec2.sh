@@ -1,6 +1,13 @@
-@#!/bin/bash
+#!/bin/bash
 
-source ./.env
+source $PWD/.env
+
+CHANGESET_OPTION="--no-execute-changeset"
+
+if [ $# = 1 ] && [ $1 = "deploy" ]; then
+  echo "deploy mode"
+  CHANGESET_OPTION=""
+fi
 
 CFN_STACK_NAME=${ENV}-ec2
 CFN_TEMPLATE=$PWD/ec2.yml
@@ -8,10 +15,11 @@ CFN_TEMPLATE=$PWD/ec2.yml
 aws cloudformation deploy \
     --stack-name ${CFN_STACK_NAME} \
     --template-file ${CFN_TEMPLATE} \
+    --capabilities CAPABILITY_IAM \
     --parameter-overrides \
-    Parameterkey=Env,ParameterValue=${ENV} \
-    Parameterkey=KeyName,ParameterValue=${EC2_KEY_NAME} \
-    Parameterkey=EC2AMIID,ParameterValue=${EC2_AMI_ID} \
-    Parameterkey=EC2InstanceType,ParameterValue=${EC2_INSTANCE_TYPE} \
+    Env=${ENV} \
+    KeyName=${EC2_KEY_NAME} \
+    EC2AMIID=${EC2_AMI_ID} \
+    EC2InstanceType=${EC2_INSTANCE_TYPE}
 
 exit 0
