@@ -20,24 +20,17 @@ Resources:
   EC2:
     Type: AWS::EC2::Instance
     Properties:
-      AvailabilityZone:
-        - !Select
-          - 0
-          - Fn::GetAZs: !Ref AWS::Region
-        - !Select
-          - 1
-          - Fn::GetAZs: !Ref AWS::Region
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref AWS::Region
       ImageId: !Ref EC2AMIID
       InstanceType: !Ref EC2InstanceType
       KeyName: !Ref KeyName
-      SecurityGroups:
-        Fn::ImportValue:
-          !Sub ${Env}-WebSecurityGroup
+      SecurityGroupIds:
+        - !Ref WebSecurityGroup
       SubnetId:
-        - Fn::ImportValue
+        Fn::ImportValue:
           !Sub ${Env}-PublicSubnet1a
-        - Fn::ImportValue
-          !Sub ${Env}-PublicSubnet1c
       Tags:
         - Key: Name
           Value: !Sub '${Env}-Instance'
@@ -68,3 +61,8 @@ Resources:
         - Key: Name
           Value: !Sub '${Env}-web-secgroup'
 
+Outputs:
+  WebSecurityGroup:
+    Value: !Ref WebSecurityGroup
+    Export:
+      Name: !Sub ${Env}-WebSecurityGroup
