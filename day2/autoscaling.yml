@@ -10,7 +10,9 @@ Resources:
   MyAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
-      AutoScalingGroupName: CHANGEME # Optional
+      AutoScalingGroupName:
+        Fn::ImportValue:
+          !Sub ${Env}-ALBTargetGroup
       AvailabilityZones:
         - CHANGEME
       CapacityRebalance: false # Optional

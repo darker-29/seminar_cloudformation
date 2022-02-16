@@ -98,6 +98,6 @@ Resources:
 
 Outputs:
   ALBTargetGroup:
-    Value: !Ref ALBTargetGroup
+    Value: !GetAtt ALBTargetGroup.TargetGroupName
     Export:
       Name: !Sub ${Env}-ALBTargetGroup
