@@ -10,90 +10,149 @@ Resources:
   MyAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
-      AutoScalingGroupName:
-        Fn::ImportValue:
-          !Sub ${Env}-ALBTargetGroup
-      AvailabilityZones:
-        - CHANGEME
-      CapacityRebalance: false # Optional
-      Cooldown: CHANGEME # Optional
-      DesiredCapacity: CHANGEME # Optional
-      HealthCheckGracePeriod: 0 # Optional
-      HealthCheckType: CHANGEME # Optional
-      InstanceId: CHANGEME # Optional
-      LaunchConfigurationName: CHANGEME # Optional
-      LaunchTemplate: # Optional
-        LaunchTemplateId: CHANGEME # Optional
-        LaunchTemplateName: CHANGEME # Optional
-        Version: CHANGEME
-      LifecycleHookSpecificationList:
-        - DefaultResult: CHANGEME # Optional
-          HeartbeatTimeout: 0 # Optional
-          LifecycleHookName: CHANGEME
-          LifecycleTransition: CHANGEME
-          NotificationMetadata: CHANGEME # Optional
-          NotificationTargetARN: CHANGEME # Optional
-          RoleARN: CHANGEME # Optional
-      LoadBalancerNames:
-        - CHANGEME
-      MaxInstanceLifetime: 0 # Optional
-      MaxSize: CHANGEME
-      MetricsCollection:
-        - Granularity: CHANGEME
-          Metrics: # Optional
-            - CHANGEME
-      MinSize: CHANGEME
-      MixedInstancesPolicy: # Optional
-        InstancesDistribution: # Optional
-          OnDemandAllocationStrategy: CHANGEME # Optional
-          OnDemandBaseCapacity: 0 # Optional
-          OnDemandPercentageAboveBaseCapacity: 0 # Optional
-          SpotAllocationStrategy: CHANGEME # Optional
-          SpotInstancePools: 0 # Optional
-          SpotMaxPrice: CHANGEME # Optional
-        LaunchTemplate:
-          LaunchTemplateSpecification:
-            LaunchTemplateId: CHANGEME # Optional
-            LaunchTemplateName: CHANGEME # Optional
-            Version: CHANGEME
-          Overrides: # Optional
-            - InstanceType: CHANGEME # Optional
-              LaunchTemplateSpecification: # Optional
-                LaunchTemplateId: CHANGEME # Optional
-                LaunchTemplateName: CHANGEME # Optional
-                Version: CHANGEME
-              WeightedCapacity: CHANGEME # Optional
-      NewInstancesProtectedFromScaleIn: false # Optional
-      NotificationConfigurations:
-        - NotificationTypes: # Optional
-            - CHANGEME
-          TopicARN: CHANGEME
-      PlacementGroup: CHANGEME # Optional
-      ServiceLinkedRoleARN: CHANGEME # Optional
-      Tags:
-        - Key: CHANGEME
-          PropagateAtLaunch: false
-          Value: CHANGEME
-      TargetGroupARNs:
-        - CHANGEME
-      TerminationPolicies:
-        - CHANGEME
+      AutoScalingGroupName: !Sub ${Env}-autoscaling-group
       VPCZoneIdentifier:
-        - CHANGEME
+        - Fn::ImportValue:
+            !Sub ${Env}-PublicSubnet1a
+        - Fn::ImportValue:
+            !Sub ${Env}-PublicSubnet1c
 
-Outputs:
-  MyAutoScalingGroupLaunchConfigurationName:
-    Value: !GetAtt MyAutoScalingGroup.LaunchConfigurationName
+      AvailabilityZones:
+        - !Select
+          - 0
+          - Fn::GetAZs: !Ref AWS::Region
+        - !Select
+          - 1
+          - Fn::GetAZs: !Ref AWS::Region
+            # CapacityRebalance: false # Optional
+      LoadBalancerNames:
+        - Fn::ImportValue:
+            !Sub ${Env}-ApplicationLoadBalancer
+      DesiredCapacity: 1
+      MinSize: 1
+      MaxSize: 1
+      Cooldown: 300
+      DesiredCapacityType: units
+      HealthCheckGracePeriod: 30
+      HealthCheckType: EC2
+      LaunchTemplate:
+        LaunchTemplateId: !Ref LaunchTemplate
+        Version: CHANGEME
+      TargetGroupARNs:
+        - Fn::ImportValue:
+            !Sub ${Env}-ALBTargetGroup
+      TerminationPolicies:
+        - OldestInstance
+      Tags:
+        - Key: Name
+          Value: !Sub ${Env}-autoscaling-group
 
-  MyAutoScalingGroupLaunchTemplateSpecification:
-    Value: !GetAtt MyAutoScalingGroup.LaunchTemplateSpecification
-
-  MyAutoScalingGroupMixedInstancesPolicy:
-    Value: !GetAtt MyAutoScalingGroup.MixedInstancesPolicy
-
-  MyAutoScalingGroupPlacementGroup:
-    Value: !GetAtt MyAutoScalingGroup.PlacementGroup
-
-  MyAutoScalingGroupVPCZoneIdentifier:
-    Value: !GetAtt MyAutoScalingGroup.VPCZoneIdentifier
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData: # Optional
+        BlockDeviceMappings: # Optional
+          - DeviceName: CHANGEME # Optional
+            Ebs: # Optional
+              DeleteOnTermination: false # Optional
+              Encrypted: false # Optional
+              Iops: 0 # Optional
+              KmsKeyId: CHANGEME # Optional
+              SnapshotId: CHANGEME # Optional
+              Throughput: 0 # Optional
+              VolumeSize: 0 # Optional
+              VolumeType: CHANGEME # Optional
+            NoDevice: CHANGEME # Optional
+            VirtualName: CHANGEME # Optional
+        CapacityReservationSpecification: # Optional
+          CapacityReservationPreference: CHANGEME # Optional
+          CapacityReservationTarget: # Optional
+            CapacityReservationId: CHANGEME # Optional
+            CapacityReservationResourceGroupArn: CHANGEME # Optional
+        CpuOptions: # Optional
+          CoreCount: 0 # Optional
+          ThreadsPerCore: 0 # Optional
+        CreditSpecification: # Optional
+          CpuCredits: CHANGEME # Optional
+        DisableApiTermination: false # Optional
+        EbsOptimized: false # Optional
+        ElasticGpuSpecifications: # Optional
+          - Type: CHANGEME # Optional
+        ElasticInferenceAccelerators: # Optional
+          - Count: 0 # Optional
+            Type: CHANGEME # Optional
+        EnclaveOptions: # Optional
+          Enabled: false # Optional
+        HibernationOptions: # Optional
+          Configured: false # Optional
+        IamInstanceProfile: # Optional
+          Arn: CHANGEME # Optional
+          Name: CHANGEME # Optional
+        ImageId: CHANGEME # Optional
+        InstanceInitiatedShutdownBehavior: CHANGEME # Optional
+        InstanceMarketOptions: # Optional
+          MarketType: CHANGEME # Optional
+          SpotOptions: # Optional
+            BlockDurationMinutes: 0 # Optional
+            InstanceInterruptionBehavior: CHANGEME # Optional
+            MaxPrice: CHANGEME # Optional
+            SpotInstanceType: CHANGEME # Optional
+            ValidUntil: CHANGEME # Optional
+        InstanceType: CHANGEME # Optional
+        KernelId: CHANGEME # Optional
+        KeyName: CHANGEME # Optional
+        LicenseSpecifications: # Optional
+          - LicenseConfigurationArn: CHANGEME # Optional
+        MetadataOptions: # Optional
+          HttpEndpoint: CHANGEME # Optional
+          HttpPutResponseHopLimit: 0 # Optional
+          HttpTokens: CHANGEME # Optional
+        Monitoring: # Optional
+          Enabled: false # Optional
+        NetworkInterfaces: # Optional
+          - AssociateCarrierIpAddress: false # Optional
+            AssociatePublicIpAddress: false # Optional
+            DeleteOnTermination: false # Optional
+            Description: CHANGEME # Optional
+            DeviceIndex: 0 # Optional
+            Groups: # Optional
+              - CHANGEME
+            InterfaceType: CHANGEME # Optional
+            Ipv6AddressCount: 0 # Optional
+            Ipv6Addresses: # Optional
+              - Ipv6Address: CHANGEME # Optional
+            NetworkCardIndex: 0 # Optional
+            NetworkInterfaceId: CHANGEME # Optional
+            PrivateIpAddress: CHANGEME # Optional
+            PrivateIpAddresses: # Optional
+              - Primary: false # Optional
+                PrivateIpAddress: CHANGEME # Optional
+            SecondaryPrivateIpAddressCount: 0 # Optional
+            SubnetId: CHANGEME # Optional
+        Placement: # Optional
+          Affinity: CHANGEME # Optional
+          AvailabilityZone: CHANGEME # Optional
+          GroupName: CHANGEME # Optional
+          HostId: CHANGEME # Optional
+          HostResourceGroupArn: CHANGEME # Optional
+          PartitionNumber: 0 # Optional
+          SpreadDomain: CHANGEME # Optional
+          Tenancy: CHANGEME # Optional
+        RamDiskId: CHANGEME # Optional
+        SecurityGroupIds: # Optional
+          - CHANGEME
+        SecurityGroups: # Optional
+          - CHANGEME
+        TagSpecifications: # Optional
+          - ResourceType: CHANGEME # Optional
+            Tags: # Optional
+              - Key: CHANGEME
+                Value: CHANGEME
+        UserData: CHANGEME # Optional
+      LaunchTemplateName: CHANGEME # Optional
+      TagSpecifications:
+        - ResourceType: CHANGEME # Optional
+          Tags: # Optional
+            - Key: CHANGEME
+              Value: CHANGEME
 
