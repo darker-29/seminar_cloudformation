@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./.env
+source $PWD/.env
 
 CHANGESET_OPTION="--no-execute-changeset"
 
@@ -16,8 +16,10 @@ CFN_TEMPLATE=$PWD/route53.yml
 aws cloudformation deploy \
     --stack-name ${CFN_STACK_NAME} \
     --template-file ${CFN_TEMPLATE} \
-    --parameter-overrides parameterkey=env,parametervalue=${env} \
-    parameterkey=Domain,parametervalue=${Domain}
+    --capabilities CAPABILITY_IAM \
+    --parameter-overrides \
+    Env=${ENV} \
+    Domain=${DOMAIN}
 
 
 exit 0

@@ -1,6 +1,6 @@
 @#!/bin/bash
 
-source ./.env
+source $PWD/.env
 
 CHANGESET_OPTION="--no-execute-changeset"
 
@@ -15,7 +15,8 @@ CFN_TEMPLATE=$PWD/alb.yml
 aws cloudformation deploy \
     --stack-name ${CFN_STACK_NAME} \
     --template-file ${CFN_TEMPLATE} \
+    --capabilities CAPABILITY_IAM \
     --parameter-overrides \
-    Parameterkey=Env,ParameterValue=${ENV} \
+    Env=${ENV}
 
 exit 0
