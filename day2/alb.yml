@@ -96,3 +96,8 @@ Resources:
         - Key: Name
           Value: !Sub ${Env}-targetgroup
 
+Outputs:
+  ALBTargetGroup:
+    Value: !Ref ALBTargetGroup
+    Export:
+      Name: !Sub ${Env}-ALBTargetGroup
