@@ -17,49 +17,24 @@ Resources:
             ResponseCode: 404
             ResponsePagePath: error.html
         DefaultCacheBehavior:
+          TargetOriginId: CHANGEME
+          CachePolicyId: CHANGEME # Optional
           AllowedMethods:
             - GET
             - HEAD
             - POST
             - PUT
             - DELETE
-          CachePolicyId: CHANGEME # Optional
-          CachedMethods: # Optional
-            - CHANGEME
-          Compress: false # Optional
-          DefaultTTL: 0 # Optional
-          FieldLevelEncryptionId: CHANGEME # Optional
-          ForwardedValues: # Optional
-            Cookies: # Optional
-              Forward: CHANGEME
-              WhitelistedNames: # Optional
-                - CHANGEME
-            Headers: # Optional
-              - CHANGEME
-            QueryString: false
-            QueryStringCacheKeys: # Optional
-              - CHANGEME
-          LambdaFunctionAssociations: # Optional
-            - EventType: CHANGEME # Optional
-              IncludeBody: false # Optional
-              LambdaFunctionARN: CHANGEME # Optional
-          MaxTTL: 0 # Optional
-          MinTTL: 0 # Optional
-          OriginRequestPolicyId: CHANGEME # Optional
-          RealtimeLogConfigArn: CHANGEME # Optional
-          SmoothStreaming: false # Optional
-          TargetOriginId: CHANGEME
-          TrustedKeyGroups: # Optional
-            - CHANGEME
-          TrustedSigners: # Optional
-            - CHANGEME
-          ViewerProtocolPolicy: CHANGEME
-        Logging: # Optional
+          CachedMethods:
+            - GET
+            - HEAD
+          ViewerProtocolPolicy: redirect-to-https
+        Logging:
           Bucket: !Sub ${Env}-cloudfront-log
-          IncludeCookies: false
           Prefix: !Sub ${Env}-cloudfront/
+          IncludeCookies: false
         PriceClass: PriceClass_200
-        ViewerCertificate: # Optional
+        ViewerCertificate:
           CloudFrontDefaultCertificate: true
           # AcmCertificateArn: CHANGEME # Optional
           # IamCertificateId: CHANGEME # Optional
@@ -75,4 +50,35 @@ Resources:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Sub ${Env}-origin-access-identity
 
+  CachePolicy:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        Comment: CHANGEME # Optional
+        DefaultTTL: 0
+        MaxTTL: 0
+        MinTTL: 0
+        Name: CHANGEME
+        ParametersInCacheKeyAndForwardedToOrigin:
+          CookiesConfig:
+            CookieBehavior: CHANGEME
+            Cookies: # Optional
+              - CHANGEME
+          EnableAcceptEncodingBrotli: false # Optional
+          EnableAcceptEncodingGzip: false
+          HeadersConfig:
+            HeaderBehavior: CHANGEME
+            Headers: # Optional
+              - CHANGEME
+          QueryStringsConfig:
+            QueryStringBehavior: CHANGEME
+            QueryStrings: # Optional
+              - CHANGEME
+
+Outputs:
+  MyCachePolicyId:
+    Value: !GetAtt MyCachePolicy.Id
+
+  MyCachePolicyLastModifiedTime:
+    Value: !GetAtt MyCachePolicy.LastModifiedTime
 
