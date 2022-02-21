@@ -11,10 +11,14 @@ Parameters:
   EC2AMIID:
     Type: String
     Default: ami-032d6db78f84e8bf5
+  EC2InstanceType:
+    Type: String
+    Default: t2.micro
+    AllowedValues: [t2.micro, t3.micro]
 
 
 Resources:
-  MyAutoScalingGroup:
+  AutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       AutoScalingGroupName: !Sub ${Env}-autoscaling-group
@@ -61,17 +65,18 @@ Resources:
         ImageId: !Ref EC2AMIID
         InstanceType: !Ref EC2InstanceType
         KeyName: !Ref KeyName
+        UserData:
+          Fn::Base64: |
+            #!/bin/bash
+            sudo yum -y install git nginx php posgresql
         NetworkInterfaces:
           - AssociatePublicIpAddress: true
             DeleteOnTermination: true
             DeviceIndex: 0
             SubnetId:
               Fn::ImportValue:
-                !Sub ${Env}-PublicSubnet1a
+                  !Sub ${Env}-PublicSubnet1a
             Groups:
               - Fn::ImportValue:
-                !Sub ${Env}-WebSecurityGroup
-        UserData:
-          Fn::Base64: |
-            sudo yum -y install git nginx php posgresql
+                  !Sub ${Env}-WebSecurityGroup
 
