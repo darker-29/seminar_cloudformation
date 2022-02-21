@@ -16,19 +16,14 @@ Resources:
       SecurityGroups:
         - Fn::ImportValue:
             !Sub ${Env}-ALBSecurityGroup
-      SubnetMappings:
-        - AllocationId: CHANGEME # Optional
-          IPv6Address: CHANGEME # Optional
-          PrivateIPv4Address: CHANGEME # Optional
-          SubnetId: CHANGEME
       Subnets:
         - Fn::ImportValue:
-          !Sub ${Env}-PublicSubnet1a
+            !Sub ${Env}-PublicSubnet1a
         - Fn::ImportValue:
-          !Sub ${Env}-PublicSubnet1c
+            !Sub ${Env}-PublicSubnet1c
       Tags:
-        - Key: CHANGEME
-          Value: CHANGEME
+        - Key: Name
+          Value: !Sub ${Env}-alb
 
   ALB80Listener:
     Type: AWS::ElasticLoadBalancingV2::Listener
@@ -56,8 +51,8 @@ Resources:
       SslPolicy: CHANGEME # Optional
       Certificates:
         - CertificateArn:
-          Fn::ImportValue:
-            !Sub ${Env}-Certificate
+            Fn::ImportValue:
+              !Sub ${Env}-Certificate
       DefaultActions:
         - Type: CHANGEME
           ForwardConfig: # Optional
