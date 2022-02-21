@@ -19,8 +19,6 @@ Resources:
           HostedZoneId:
             Fn::ImportValue:
               !Sub ${Env}-HostedZoneId
-      SubjectAlternativeNames:
-        - !Join ['*.', Domain]
       Tags:
         - Key: Name
           Value: !Sub ${Env}-acm
