@@ -5,6 +5,13 @@ Parameters:
   Env:
     Type: String
     Default: test
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: The EC2 Key Pair to allow SSH access to the instance
+  EC2AMIID:
+    Type: String
+    Default: ami-032d6db78f84e8bf5
+
 
 Resources:
   MyAutoScalingGroup:
@@ -16,7 +23,6 @@ Resources:
             !Sub ${Env}-PublicSubnet1a
         - Fn::ImportValue:
             !Sub ${Env}-PublicSubnet1c
-
       AvailabilityZones:
         - !Select
           - 0
@@ -36,7 +42,7 @@ Resources:
       HealthCheckGracePeriod: 30
       HealthCheckType: EC2
       LaunchTemplate:
-        LaunchTemplateId: !Ref LaunchTemplate
+        LaunchTemplateId: !Ref EC2LaunchTemplate
         Version: CHANGEME
       TargetGroupARNs:
         - Fn::ImportValue:
@@ -47,112 +53,25 @@ Resources:
         - Key: Name
           Value: !Sub ${Env}-autoscaling-group
 
-  LaunchTemplate:
+  EC2LaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
-      LaunchTemplateData: # Optional
-        BlockDeviceMappings: # Optional
-          - DeviceName: CHANGEME # Optional
-            Ebs: # Optional
-              DeleteOnTermination: false # Optional
-              Encrypted: false # Optional
-              Iops: 0 # Optional
-              KmsKeyId: CHANGEME # Optional
-              SnapshotId: CHANGEME # Optional
-              Throughput: 0 # Optional
-              VolumeSize: 0 # Optional
-              VolumeType: CHANGEME # Optional
-            NoDevice: CHANGEME # Optional
-            VirtualName: CHANGEME # Optional
-        CapacityReservationSpecification: # Optional
-          CapacityReservationPreference: CHANGEME # Optional
-          CapacityReservationTarget: # Optional
-            CapacityReservationId: CHANGEME # Optional
-            CapacityReservationResourceGroupArn: CHANGEME # Optional
-        CpuOptions: # Optional
-          CoreCount: 0 # Optional
-          ThreadsPerCore: 0 # Optional
-        CreditSpecification: # Optional
-          CpuCredits: CHANGEME # Optional
-        DisableApiTermination: false # Optional
-        EbsOptimized: false # Optional
-        ElasticGpuSpecifications: # Optional
-          - Type: CHANGEME # Optional
-        ElasticInferenceAccelerators: # Optional
-          - Count: 0 # Optional
-            Type: CHANGEME # Optional
-        EnclaveOptions: # Optional
-          Enabled: false # Optional
-        HibernationOptions: # Optional
-          Configured: false # Optional
-        IamInstanceProfile: # Optional
-          Arn: CHANGEME # Optional
-          Name: CHANGEME # Optional
-        ImageId: CHANGEME # Optional
-        InstanceInitiatedShutdownBehavior: CHANGEME # Optional
-        InstanceMarketOptions: # Optional
-          MarketType: CHANGEME # Optional
-          SpotOptions: # Optional
-            BlockDurationMinutes: 0 # Optional
-            InstanceInterruptionBehavior: CHANGEME # Optional
-            MaxPrice: CHANGEME # Optional
-            SpotInstanceType: CHANGEME # Optional
-            ValidUntil: CHANGEME # Optional
-        InstanceType: CHANGEME # Optional
-        KernelId: CHANGEME # Optional
-        KeyName: CHANGEME # Optional
-        LicenseSpecifications: # Optional
-          - LicenseConfigurationArn: CHANGEME # Optional
-        MetadataOptions: # Optional
-          HttpEndpoint: CHANGEME # Optional
-          HttpPutResponseHopLimit: 0 # Optional
-          HttpTokens: CHANGEME # Optional
-        Monitoring: # Optional
-          Enabled: false # Optional
-        NetworkInterfaces: # Optional
-          - AssociateCarrierIpAddress: false # Optional
-            AssociatePublicIpAddress: false # Optional
-            DeleteOnTermination: false # Optional
-            Description: CHANGEME # Optional
-            DeviceIndex: 0 # Optional
-            Groups: # Optional
-              - CHANGEME
-            InterfaceType: CHANGEME # Optional
-            Ipv6AddressCount: 0 # Optional
-            Ipv6Addresses: # Optional
-              - Ipv6Address: CHANGEME # Optional
-            NetworkCardIndex: 0 # Optional
-            NetworkInterfaceId: CHANGEME # Optional
-            PrivateIpAddress: CHANGEME # Optional
-            PrivateIpAddresses: # Optional
-              - Primary: false # Optional
-                PrivateIpAddress: CHANGEME # Optional
-            SecondaryPrivateIpAddressCount: 0 # Optional
-            SubnetId: CHANGEME # Optional
-        Placement: # Optional
-          Affinity: CHANGEME # Optional
-          AvailabilityZone: CHANGEME # Optional
-          GroupName: CHANGEME # Optional
-          HostId: CHANGEME # Optional
-          HostResourceGroupArn: CHANGEME # Optional
-          PartitionNumber: 0 # Optional
-          SpreadDomain: CHANGEME # Optional
-          Tenancy: CHANGEME # Optional
-        RamDiskId: CHANGEME # Optional
-        SecurityGroupIds: # Optional
-          - CHANGEME
-        SecurityGroups: # Optional
-          - CHANGEME
-        TagSpecifications: # Optional
-          - ResourceType: CHANGEME # Optional
-            Tags: # Optional
-              - Key: CHANGEME
-                Value: CHANGEME
-        UserData: CHANGEME # Optional
-      LaunchTemplateName: CHANGEME # Optional
-      TagSpecifications:
-        - ResourceType: CHANGEME # Optional
-          Tags: # Optional
-            - Key: CHANGEME
-              Value: CHANGEME
+      LaunchTemplateName: EC2Template
+      LaunchTemplateData:
+        ImageId: !Ref EC2AMIID
+        InstanceType: !Ref EC2InstanceType
+        KeyName: !Ref KeyName
+        NetworkInterfaces:
+          - AssociatePublicIpAddress: true
+            DeleteOnTermination: true
+            DeviceIndex: 0
+            SubnetId:
+              Fn::ImportValue:
+                !Sub ${Env}-PublicSubnet1a
+            Groups:
+              - Fn::ImportValue:
+                !Sub ${Env}-WebSecurityGroup
+        UserData:
+          Fn::Base64: |
+            sudo yum -y install git nginx php posgresql
 
