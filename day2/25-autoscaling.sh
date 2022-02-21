@@ -17,6 +17,9 @@ aws cloudformation deploy \
     --template-file ${CFN_TEMPLATE} \
     --capabilities CAPABILITY_IAM \
     --parameter-overrides \
-    Env=${ENV}
+    Env=${ENV} \
+    KeyName=${EC2_KEY_NAME} \ 
+    EC2AMIID=${EC2_AMI_ID} \
+    EC2InstanceType=${EC2_INSTANCE_TYPE}
 
 exit 0
