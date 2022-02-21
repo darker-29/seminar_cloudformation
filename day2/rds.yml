@@ -90,7 +90,7 @@ Resources:
     Type: AWS::RDS::DBParameterGroup
     Properties:
       Description: test db parametergroup
-      Family: mysql8
+      Family: mysql8.0
         #Parameters:
         #  CHANGEME:
       Tags:
