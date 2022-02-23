@@ -45,7 +45,7 @@ Resources:
       IpAddressType: dualstack
       Scheme: internet-facing
       SecurityGroups:
-        - !Ref ${Env}-ALBSecurityGroup
+        - !Ref ALBSecurityGroup
       Subnets:
         - Fn::ImportValue:
             !Sub ${Env}-PublicSubnet1a
