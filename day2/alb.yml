@@ -13,6 +13,7 @@ Resources:
       Name: !Sub ${Env}-alb
       Type: application
       IpAddressType: dualstack
+      Scheme: internet-facing
       SecurityGroups:
         - Fn::ImportValue:
             !Sub ${Env}-ALBSecurityGroup
