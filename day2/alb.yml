@@ -42,7 +42,7 @@ Resources:
     Properties:
       Name: !Sub ${Env}-alb
       Type: application
-      IpAddressType: dualstack
+      IpAddressType: ipv4
       Scheme: internet-facing
       SecurityGroups:
         - !Ref ALBSecurityGroup
