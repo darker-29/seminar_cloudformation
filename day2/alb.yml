@@ -115,7 +115,7 @@ Resources:
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 3
-      UnhealthyThresholdCount: 0
+      UnhealthyThresholdCount: 5
       Tags:
         - Key: Name
           Value: !Sub ${Env}-targetgroup
