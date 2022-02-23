@@ -45,8 +45,7 @@ Resources:
       IpAddressType: dualstack
       Scheme: internet-facing
       SecurityGroups:
-        - Fn::ImportValue:
-            !Sub ${Env}-ALBSecurityGroup
+        - !Ref ${Env}-ALBSecurityGroup
       Subnets:
         - Fn::ImportValue:
             !Sub ${Env}-PublicSubnet1a
@@ -73,27 +72,27 @@ Resources:
             Query: '#{query}'
             StatusCode: 'HTTP_301'
 
-  ALB443Listener:
-    Type: AWS::ElasticLoadBalancingV2::Listener
-    Properties:
-      LoadBalancerArn: !Ref ApplicationLoadBalancer
-      Port: 443
-      Protocol: HTTPS
-      SslPolicy: ELBSecurityPolicy-2016-08
-      Certificates:
-        - CertificateArn:
-            Fn::ImportValue:
-              !Sub ${Env}-Certificate
-      DefaultActions:
-        - Order: 1
-          Type: forward
-          ForwardConfig:
-            TargetGroupStickinessConfig:
-              DurationSeconds: 0
-              Enabled: false
-            TargetGroups:
-              - TargetGroupArn: !Ref ALBTargetGroup
-                Weight: 100
+              #ALB443Listener:
+              #  Type: AWS::ElasticLoadBalancingV2::Listener
+              #  Properties:
+              #    LoadBalancerArn: !Ref ApplicationLoadBalancer
+              #    Port: 443
+              #    Protocol: HTTPS
+              #    SslPolicy: ELBSecurityPolicy-2016-08
+              #    Certificates:
+              #      - CertificateArn:
+              #          Fn::ImportValue:
+              #            !Sub ${Env}-Certificate
+              #    DefaultActions:
+              #      - Order: 1
+              #        Type: forward
+              #        ForwardConfig:
+              #          TargetGroupStickinessConfig:
+              #            DurationSeconds: 0
+              #            Enabled: false
+              #          TargetGroups:
+              #            - TargetGroupArn: !Ref ALBTargetGroup
+              #              Weight: 100
 
   ALBTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -107,7 +106,7 @@ Resources:
       ProtocolVersion: HTTP2
       TargetType: alb
       Targets:
-        - Id: !Ref LoadBalancer
+        - Id: !Ref ApplicationLoadBalancer
           Port: 80
       HealthCheckEnabled: true
       HealthCheckIntervalSeconds: 60
