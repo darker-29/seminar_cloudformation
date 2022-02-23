@@ -11,7 +11,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Name: !Sub ${Env}-alb
-      Type: alb
+      Type: application
       IpAddressType: dualstack
       SecurityGroups:
         - Fn::ImportValue:
