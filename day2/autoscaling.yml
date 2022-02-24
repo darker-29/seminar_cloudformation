@@ -55,6 +55,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${Env}-autoscaling-group
+          PropagateAtLaunch: true
 
   EC2LaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
