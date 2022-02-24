@@ -29,10 +29,6 @@ Resources:
         PriceClass: PriceClass_200
         ViewerCertificate:
           CloudFrontDefaultCertificate: true
-          # AcmCertificateArn: CHANGEME # Optional
-          # IamCertificateId: CHANGEME # Optional
-          # MinimumProtocolVersion: CHANGEME # Optional
-          # SslSupportMethod: CHANGEME # Optional
       Tags:
         - Key: Name
           Value: !Sub ${Env}-distribution
