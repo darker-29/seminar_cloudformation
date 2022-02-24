@@ -32,3 +32,8 @@ Resources:
         - Key: Name
           Value: !Sub ${Env}-${S3BucketName}
 
+Outputs:
+  S3Bucket:
+    Value: !Ref ContentsBucket
+    Export:
+      Name: !Sub ${Env}-bucket
