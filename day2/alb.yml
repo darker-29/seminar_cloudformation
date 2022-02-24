@@ -102,11 +102,13 @@ Resources:
         Fn::ImportValue:
           !Sub ${Env}-VpcId
       Protocol: HTTP
-      Port: 443
+      Port: 80
       ProtocolVersion: HTTP2
-      TargetType: alb
+      TargetType: instance
       Targets:
-        - Id: !Ref ApplicationLoadBalancer
+        - Id:
+            Fn::ImportValue:
+              !Sub ${Env}-ec2
           Port: 80
       HealthCheckEnabled: true
       HealthCheckIntervalSeconds: 60
@@ -121,6 +123,10 @@ Resources:
           Value: !Sub ${Env}-targetgroup
 
 Outputs:
+  ApplicationLoadBalancer:
+    Value: !Ref ApplicationLoadBalancer
+    Export:
+      Name: !Sub ${Env}-ApplicationLoadBalancer
   ALBTargetGroup:
     Value: !Ref ALBTargetGroup
     Export:
