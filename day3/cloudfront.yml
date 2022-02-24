@@ -64,10 +64,3 @@ Resources:
             QueryStrings: # Optional
               - CHANGEME
 
-Outputs:
-  MyCachePolicyId:
-    Value: !GetAtt MyCachePolicy.Id
-
-  MyCachePolicyLastModifiedTime:
-    Value: !GetAtt MyCachePolicy.LastModifiedTime
-
