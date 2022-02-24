@@ -13,16 +13,6 @@ Resources:
     Type: AWS::Route53::HostedZone
     Properties:
       Name: !Ref Domain
-      VPCs:
-        - VPCId: !Sub ${Env}-VpcId
-          VPCRegion: AWS::Region
-      #HostedZoneConfig: # Optional
-      #  Comment: CHANGEME # Optional
-      #HostedZoneTags:
-      #  - Key: Name
-      #    Value: test.con
-        #QueryLoggingConfig: # Optional
-        #  CloudWatchLogsLogGroupArn: CHANGEME
 
 Outputs:
   HostedZoneId:
