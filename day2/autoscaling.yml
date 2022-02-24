@@ -34,9 +34,6 @@ Resources:
         - !Select
           - 1
           - Fn::GetAZs: !Ref AWS::Region
-      LoadBalancerNames:
-        - Fn::ImportValue:
-            !Sub ${Env}-ApplicationLoadBalancer
       DesiredCapacity: 1
       MinSize: 1
       MaxSize: 1
