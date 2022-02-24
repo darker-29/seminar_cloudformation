@@ -22,9 +22,6 @@ Resources:
           AllowedMethods:
             - GET
             - HEAD
-            - POST
-            - PUT
-            - DELETE
           CachedMethods:
             - GET
             - HEAD
