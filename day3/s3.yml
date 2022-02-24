@@ -21,13 +21,13 @@ Resources:
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
       VersioningConfiguration:
-        Status: Disabled
+        Status: Suspended
       LifecycleConfiguration:
         Rules:
-          Status: Enabled
-          Transitions:
-            StorageClass: GLACIER
-            TransitionInDays: 30
+          - Status: Enabled
+            Transition:
+              StorageClass: GLACIER
+              TransitionInDays: 30
       Tags:
         - Key: Name
           Value: !Sub ${Env}-${S3BucketName}
