@@ -78,3 +78,7 @@ Outputs:
     Value: !Ref WebSecurityGroup
     Export:
       Name: !Sub ${Env}-WebSecurityGroup
+  EC2:
+    Value: !Ref EC2
+    Export:
+      Name: !Sub ${Env}-ec2
