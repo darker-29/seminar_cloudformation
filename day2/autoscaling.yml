@@ -46,7 +46,7 @@ Resources:
       HealthCheckType: EC2
       LaunchTemplate:
         LaunchTemplateId: !Ref EC2LaunchTemplate
-        Version: CHANGEME
+        Version: !GetAtt EC2LaunchTemplate.LatestVersionNumber
       TargetGroupARNs:
         - Fn::ImportValue:
             !Sub ${Env}-ALBTargetGroup
