@@ -34,7 +34,6 @@ Resources:
         - !Select
           - 1
           - Fn::GetAZs: !Ref AWS::Region
-            # CapacityRebalance: false # Optional
       LoadBalancerNames:
         - Fn::ImportValue:
             !Sub ${Env}-ApplicationLoadBalancer
