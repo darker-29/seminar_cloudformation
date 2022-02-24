@@ -26,10 +26,6 @@ Resources:
             - GET
             - HEAD
           ViewerProtocolPolicy: redirect-to-https
-        Logging:
-          Bucket: !Sub ${Env}-cloudfront-log
-          Prefix: !Sub ${Env}-cloudfront/
-          IncludeCookies: false
         PriceClass: PriceClass_200
         ViewerCertificate:
           CloudFrontDefaultCertificate: true
