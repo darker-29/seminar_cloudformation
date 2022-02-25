@@ -18,3 +18,7 @@ Resources:
         - Key: Name
           Value: !Sub ${Env}-app
 
+Outputs:
+  Value: !GetAtt Repository.Name
+  Export:
+    Name: !Sub ${Env}-RepositoryName
