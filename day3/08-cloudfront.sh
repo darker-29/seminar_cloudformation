@@ -19,7 +19,7 @@ aws cloudformation deploy \
     --capabilities CAPABILITY_IAM \
     --parameter-overrides \
     Env=${ENV} \
-    Domain=${DOMAIN}
+    S3BucketName=${S3_BUCKET_NAME}
 
 
 exit 0
