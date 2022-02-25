@@ -5,9 +5,6 @@ Parmeters:
   Env:
     Type: String
     Default: test
-  TargetBranch:
-    Type: String
-    Default: test
 
 Resources:
   Repository:
@@ -16,7 +13,7 @@ Resources:
       RepositoryName: !Sub ${Env}-app
       RepositoryDescription: !Sub ${Env} Application Repository
       Code:
-        BranchName: !Ref TargetBranch
+        BranchName: !Ref Env
       Tags:
         - Key: Name
           Value: !Sub ${Env}-app
