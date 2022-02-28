@@ -5,7 +5,7 @@ Parmeters:
   Env:
     Type: String
     Default: test
-  TargetBranch:
+  BranchName:
     Type: String
     Default: test
 
@@ -29,19 +29,21 @@ Resources:
           Actions:
             - Name: !Sub ${Env}-source
               Namespace: App
+              Region: AWS::Region
               ActionTypeId:
                 Category: Source
                 Owner: AWS
                 Provider: CodeCommit
                 Version: 1
               Configuration:
-                RepositoryName: !Ref Repository
-                BranchName: !Ref TargetBranch
+                RepositoryName:
+                  Fn::ImportValue:
+                    !Sub ${Env}-Repository
+                BranchName: !Ref BranchName
                 PollForSourceChanges: false
                 OutputArtifactFormat: CODE_ZIP
               OutputArtifacts:
                 - Name: !Sub ${Env}-source
-              Region: AWS::Region
               RunOrder: 1
         - Name: !Sub ${Env}-build
           Actions:
