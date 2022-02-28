@@ -38,7 +38,7 @@ Resources:
               Configuration:
                 RepositoryName:
                   Fn::ImportValue:
-                    !Sub ${Env}-Repository
+                    !Sub ${Env}-RepositoryName
                 BranchName: !Ref BranchName
                 PollForSourceChanges: false
                 OutputArtifactFormat: CODE_ZIP
