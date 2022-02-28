@@ -86,18 +86,8 @@ Resources:
   CodeBuild:
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: CHANGEME # Optional
+      Name: !Sub ${Env}-build
       Description: !Sub ${Env} Build
-      Artifacts:
-        Type: S3
-        Location: 
-        ArtifactIdentifier: !Sub ${Env}Build
-        EncryptionDisabled: false # Optional
-        Name: !Sub ${Env}Build
-        NamespaceType: App
-        Packaging: ZIP
-        Path: CHANGEME # Optional
-          # EncryptionKey: CHANGEME # Optional
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
@@ -111,11 +101,14 @@ Resources:
           - Name: CHANGEME
             Type: CHANGEME # Optional
             Value: CHANGEME
-      LogsConfig:
-        CloudWatchLogs:
-          GroupName: CodeBuild
-          StreamName: !Sub ${Env}
-          Status: ENABLED
+      Artifacts:
+        Type: S3
+        Location: 
+        ArtifactIdentifier: !Sub ${Env}Build
+        EncryptionDisabled: false
+        Name: !Sub ${Env}-Build
+        NamespaceType: App
+        Packaging: ZIP
       ServiceRole: CHANGEME
       Source:
         Type: CODECOMMIT
@@ -123,12 +116,6 @@ Resources:
         Location: !GetAtt Repository.CloneUrlHttp
         BuildSpec: buildspec.yml
       TimeoutInMinutes: 120
-      VpcConfig:
-        SecurityGroupIds:
-          - CHANGEME
-        Subnets:
-          - CHANGEME
-        VpcId: CHANGEME # Optional
       Tags:
         - Key: Name
           Value: !Sub ${Env}-build
