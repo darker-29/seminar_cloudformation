@@ -12,7 +12,7 @@ Resources:
     Properties:
       EncryptionConfiguration:
         EncryptionType: KMS
-      ImageTagMutability: CHANGEME # Optional
+      ImageTagMutability: MUTABLE
       LifecyclePolicy:
         LifecyclePolicyText: CHANGEME # Optional
         RegistryId: CHANGEME # Optional
