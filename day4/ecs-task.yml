@@ -29,26 +29,6 @@ Resources:
               Value: CHANGEME # Optional
           Links: # Optional
             - CHANGEME
-          LinuxParameters: # Optional
-            Capabilities: # Optional
-              Add: # Optional
-                - CHANGEME
-              Drop: # Optional
-                - CHANGEME
-            Devices: # Optional
-              - ContainerPath: CHANGEME # Optional
-                HostPath: CHANGEME # Optional
-                Permissions: # Optional
-                  - CHANGEME
-            InitProcessEnabled: false # Optional
-            MaxSwap: 0 # Optional
-            SharedMemorySize: 0 # Optional
-            Swappiness: 0 # Optional
-            Tmpfs: # Optional
-              - ContainerPath: CHANGEME # Optional
-                MountOptions: # Optional
-                  - CHANGEME
-                Size: 0
           MemoryReservation: 0 # Optional
           MountPoints: # Optional
             - ContainerPath: CHANGEME # Optional
