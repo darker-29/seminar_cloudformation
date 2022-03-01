@@ -10,10 +10,10 @@ Resources:
   ECRRepository:
     Type: AWS::ECR::Repository
     Properties:
+      RepositoryName: !Sub ${Env}-ecr-repository
       EncryptionConfiguration:
         EncryptionType: KMS
       ImageTagMutability: MUTABLE
-      RepositoryName: CHANGEME # Optional
       RepositoryPolicyText: '{"JSON": "CHANGEME"}' # Optional
       Tags:
         - Key: CHANGEME
