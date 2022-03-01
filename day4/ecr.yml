@@ -18,7 +18,5 @@ Resources:
         - Key: Name
           Value: !Sub ${Env}-ecr-repository
 
-Outputs:
-  MyClusterArn:
-    Value: !GetAtt MyCluster.Arn
+
 
