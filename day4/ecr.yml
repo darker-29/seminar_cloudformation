@@ -13,9 +13,6 @@ Resources:
       EncryptionConfiguration:
         EncryptionType: KMS
       ImageTagMutability: MUTABLE
-      LifecyclePolicy:
-        LifecyclePolicyText: CHANGEME # Optional
-        RegistryId: CHANGEME # Optional
       RepositoryName: CHANGEME # Optional
       RepositoryPolicyText: '{"JSON": "CHANGEME"}' # Optional
       Tags:
