@@ -69,13 +69,6 @@ Resources:
                 MountOptions: # Optional
                   - CHANGEME
                 Size: 0
-          LogConfiguration: # Optional
-            LogDriver: CHANGEME
-            Options: # Optional
-              CHANGEME: CHANGEME
-            SecretOptions: # Optional
-              - Name: CHANGEME
-                ValueFrom: CHANGEME
           MemoryReservation: 0 # Optional
           MountPoints: # Optional
             - ContainerPath: CHANGEME # Optional
@@ -88,7 +81,6 @@ Resources:
               Protocol: CHANGEME # Optional
           Privileged: false # Optional
           PseudoTerminal: false # Optional
-          ReadonlyRootFilesystem: false # Optional
           RepositoryCredentials: # Optional
             CredentialsParameter: CHANGEME # Optional
           ResourceRequirements: # Optional
