@@ -14,7 +14,6 @@ Resources:
       EncryptionConfiguration:
         EncryptionType: KMS
       ImageTagMutability: MUTABLE
-      RepositoryPolicyText: '{"JSON": "CHANGEME"}' # Optional
       Tags:
         - Key: Name
           Value: !Sub ${Env}-ecr-repository
