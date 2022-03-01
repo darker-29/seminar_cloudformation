@@ -7,7 +7,11 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       ContainerDefinitions:
-        - Command: # Optional
+        - Image:
+            Fn::ImportValue:
+              !Sub ${Env}-ECRRepository
+          Essential: true
+          Command: # Optional
             - CHANGEME
           Cpu: 0 # Optional
           DependsOn: # Optional
@@ -26,7 +30,6 @@ Resources:
           EnvironmentFiles: # Optional
             - Type: CHANGEME # Optional
               Value: CHANGEME # Optional
-          Essential: false # Optional
           ExtraHosts: # Optional
             - Hostname: CHANGEME # Optional
               IpAddress: CHANGEME # Optional
@@ -42,8 +45,7 @@ Resources:
             StartPeriod: 0 # Optional
             Timeout: 0 # Optional
           Hostname: CHANGEME # Optional
-          Image: CHANGEME # Optional
-          Interactive: false # Optional
+                    Interactive: false # Optional
           Links: # Optional
             - CHANGEME
           LinuxParameters: # Optional
