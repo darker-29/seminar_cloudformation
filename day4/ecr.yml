@@ -12,7 +12,6 @@ Resources:
     Properties:
       EncryptionConfiguration:
         EncryptionType: KMS
-      ImageScanningConfiguration: '{"JSON": "CHANGEME"}' # Optional
       ImageTagMutability: CHANGEME # Optional
       LifecyclePolicy:
         LifecyclePolicyText: CHANGEME # Optional
