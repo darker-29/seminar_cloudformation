@@ -14,6 +14,7 @@ Resources:
           Command: # Optional
             - CHANGEME
           Cpu: 0 # Optional
+          Memory: 0 # Optional
           DependsOn: # Optional
             - Condition: CHANGEME # Optional
               ContainerName: CHANGEME # Optional
@@ -75,7 +76,6 @@ Resources:
             SecretOptions: # Optional
               - Name: CHANGEME
                 ValueFrom: CHANGEME
-          Memory: 0 # Optional
           MemoryReservation: 0 # Optional
           MountPoints: # Optional
             - ContainerPath: CHANGEME # Optional
