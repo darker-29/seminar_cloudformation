@@ -14,10 +14,6 @@ Resources:
             - Condition: CHANGEME # Optional
               ContainerName: CHANGEME # Optional
           DisableNetworking: false # Optional
-          DnsSearchDomains: # Optional
-            - CHANGEME
-          DnsServers: # Optional
-            - CHANGEME
           DockerLabels: # Optional
             CHANGEME: CHANGEME
           DockerSecurityOptions: # Optional
