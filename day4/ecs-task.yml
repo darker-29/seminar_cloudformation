@@ -28,12 +28,6 @@ Resources:
           Environment: # Optional
             - Name: CHANGEME # Optional
               Value: CHANGEME # Optional
-          EnvironmentFiles: # Optional
-            - Type: CHANGEME # Optional
-              Value: CHANGEME # Optional
-          ExtraHosts: # Optional
-            - Hostname: CHANGEME # Optional
-              IpAddress: CHANGEME # Optional
           FirelensConfiguration: # Optional
             Options: # Optional
               CHANGEME: CHANGEME
