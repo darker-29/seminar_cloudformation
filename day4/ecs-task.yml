@@ -40,9 +40,6 @@ Resources:
               HostPort: 0 # Optional
               Protocol: CHANGEME # Optional
           Privileged: false # Optional
-          PseudoTerminal: false # Optional
-          RepositoryCredentials: # Optional
-            CredentialsParameter: CHANGEME # Optional
           ResourceRequirements: # Optional
             - Type: CHANGEME
               Value: CHANGEME
