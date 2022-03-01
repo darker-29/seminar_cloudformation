@@ -18,5 +18,9 @@ Resources:
         - Key: Name
           Value: !Sub ${Env}-ecr-repository
 
-
+Outputs:
+  ECRRepository:
+    Value: !Ref ECRRepository
+    Export:
+      Name: !Sub ${Env}-ECRRepository
 
