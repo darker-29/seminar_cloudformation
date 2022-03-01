@@ -10,6 +10,8 @@ Resources:
   ECRRepository:
     Type: AWS::ECR::Repository
     Properties:
+      EncryptionConfiguration:
+        EncryptionType: KMS
       ImageScanningConfiguration: '{"JSON": "CHANGEME"}' # Optional
       ImageTagMutability: CHANGEME # Optional
       LifecyclePolicy:
