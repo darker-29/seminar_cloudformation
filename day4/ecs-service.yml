@@ -10,10 +10,6 @@ Resources:
   ECSService:
     Type: AWS::ECS::Service
     Properties:
-      CapacityProviderStrategy:
-        - Base: 0 # Optional
-          CapacityProvider: CHANGEME # Optional
-          Weight: 0 # Optional
       Cluster: CHANGEME # Optional
       DeploymentConfiguration: # Optional
         DeploymentCircuitBreaker: # Optional
