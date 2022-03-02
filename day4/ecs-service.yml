@@ -10,6 +10,7 @@ Resources:
   ECSService:
     Type: AWS::ECS::Service
     Properties:
+      ServiceName: !Sub ${Env}-service
       LaunchType: FARGATE
       PlatformVersion: 1.4.0
       SchedulingStrategy: REPLICA
@@ -37,7 +38,6 @@ Resources:
             - CHANGEME
       Role: CHANGEME # Optional
       ServiceArn: CHANGEME # Optional
-      ServiceName: CHANGEME # Optional
       ServiceRegistries:
         - ContainerName: CHANGEME # Optional
           ContainerPort: 0 # Optional
