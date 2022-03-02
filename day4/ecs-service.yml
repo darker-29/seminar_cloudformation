@@ -18,7 +18,7 @@ Resources:
       DesiredCount: 1
       EnableECSManagedTags: true
       EnableExecuteCommand: true
-      HealthCheckGracePeriodSeconds: 0 # Optional
+      HealthCheckGracePeriodSeconds: 60
       LaunchType: CHANGEME # Optional
       LoadBalancers:
         - ContainerName: CHANGEME # Optional
