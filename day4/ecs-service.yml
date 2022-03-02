@@ -11,6 +11,7 @@ Resources:
     Type: AWS::ECS::Service
     Properties:
       LaunchType: FARGATE
+      PlatformVersion: 1.4.0
       Cluster:
         Fn::ImportValue:
           !Sub ${Env}-cluster
@@ -32,7 +33,6 @@ Resources:
             - CHANGEME
           Subnets: # Optional
             - CHANGEME
-      PlatformVersion: CHANGEME # Optional
       PropagateTags: CHANGEME # Optional
       Role: CHANGEME # Optional
       SchedulingStrategy: CHANGEME # Optional
