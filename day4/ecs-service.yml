@@ -11,6 +11,9 @@ Resources:
     Type: AWS::ECS::Service
     Properties:
       ServiceName: !Sub ${Env}-service
+      TaskDefinition:
+        Fn::ImportValue:
+          !Sub ${Env}-task
       LaunchType: FARGATE
       PlatformVersion: 1.4.0
       SchedulingStrategy: REPLICA
@@ -46,5 +49,4 @@ Resources:
       Tags:
         - Key: CHANGEME
           Value: CHANGEME
-      TaskDefinition: CHANGEME # Optional
 
