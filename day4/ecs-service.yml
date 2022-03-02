@@ -10,7 +10,9 @@ Resources:
   ECSService:
     Type: AWS::ECS::Service
     Properties:
-      Cluster: CHANGEME # Optional
+      Cluster:
+        Fn::ImportValue:
+          !Sub ${Env}-cluster
       DeploymentConfiguration: # Optional
         DeploymentCircuitBreaker: # Optional
           Enable: false
