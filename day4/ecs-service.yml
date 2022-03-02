@@ -13,12 +13,6 @@ Resources:
       Cluster:
         Fn::ImportValue:
           !Sub ${Env}-cluster
-      DeploymentConfiguration: # Optional
-        DeploymentCircuitBreaker: # Optional
-          Enable: false
-          Rollback: false
-        MaximumPercent: 0 # Optional
-        MinimumHealthyPercent: 0 # Optional
       DeploymentController: # Optional
         Type: CHANGEME # Optional
       DesiredCount: 0 # Optional
