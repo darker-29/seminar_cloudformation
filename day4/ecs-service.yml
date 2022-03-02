@@ -15,8 +15,8 @@ Resources:
           !Sub ${Env}-cluster
       DeploymentController:
         Type: ECS
-      DesiredCount: 0 # Optional
-      EnableECSManagedTags: false # Optional
+      DesiredCount: 1
+      EnableECSManagedTags: true
       EnableExecuteCommand: false # Optional
       HealthCheckGracePeriodSeconds: 0 # Optional
       LaunchType: CHANGEME # Optional
