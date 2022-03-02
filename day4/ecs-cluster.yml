@@ -11,9 +11,6 @@ Resources:
     Type: AWS::ECS::Cluster
     Properties:
       ClusterName: !Sub ${Env}-cluster
-      ClusterSettings:
-        - Name: CHANGEME # Optional
-          Value: CHANGEME # Optional
       Tags:
         - Key: Name
           Value: !Sub ${Env}-cluster
