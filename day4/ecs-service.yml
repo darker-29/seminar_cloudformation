@@ -40,12 +40,6 @@ Resources:
             - CHANGEME
           Subnets: # Optional
             - CHANGEME
-      PlacementConstraints:
-        - Expression: CHANGEME # Optional
-          Type: CHANGEME
-      PlacementStrategies:
-        - Field: CHANGEME # Optional
-          Type: CHANGEME
       PlatformVersion: CHANGEME # Optional
       PropagateTags: CHANGEME # Optional
       Role: CHANGEME # Optional
