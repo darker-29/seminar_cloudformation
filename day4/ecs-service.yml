@@ -13,8 +13,8 @@ Resources:
       Cluster:
         Fn::ImportValue:
           !Sub ${Env}-cluster
-      DeploymentController: # Optional
-        Type: CHANGEME # Optional
+      DeploymentController:
+        Type: ECS
       DesiredCount: 0 # Optional
       EnableECSManagedTags: false # Optional
       EnableExecuteCommand: false # Optional
