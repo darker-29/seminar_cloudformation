@@ -10,6 +10,7 @@ Resources:
   ECSService:
     Type: AWS::ECS::Service
     Properties:
+      LaunchType: FARGATE
       Cluster:
         Fn::ImportValue:
           !Sub ${Env}-cluster
@@ -19,7 +20,6 @@ Resources:
       EnableECSManagedTags: true
       EnableExecuteCommand: true
       HealthCheckGracePeriodSeconds: 60
-      LaunchType: CHANGEME # Optional
       LoadBalancers:
         - ContainerName: CHANGEME # Optional
           ContainerPort: 0 # Optional
