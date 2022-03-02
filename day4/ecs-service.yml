@@ -12,6 +12,7 @@ Resources:
     Properties:
       LaunchType: FARGATE
       PlatformVersion: 1.4.0
+      SchedulingStrategy: REPLICA
       Cluster:
         Fn::ImportValue:
           !Sub ${Env}-cluster
@@ -35,7 +36,6 @@ Resources:
           Subnets: # Optional
             - CHANGEME
       Role: CHANGEME # Optional
-      SchedulingStrategy: CHANGEME # Optional
       ServiceArn: CHANGEME # Optional
       ServiceName: CHANGEME # Optional
       ServiceRegistries:
