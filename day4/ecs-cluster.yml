@@ -10,24 +10,10 @@ Resources:
   MyCluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: CHANGEME # Optional
+      ClusterName: !Sub ${Env}-cluster
       ClusterSettings:
         - Name: CHANGEME # Optional
           Value: CHANGEME # Optional
-      Configuration: # Optional
-        ExecuteCommandConfiguration: # Optional
-          KmsKeyId: CHANGEME # Optional
-          LogConfiguration: # Optional
-            CloudWatchEncryptionEnabled: false # Optional
-            CloudWatchLogGroupName: CHANGEME # Optional
-            S3BucketName: CHANGEME # Optional
-            S3EncryptionEnabled: false # Optional
-            S3KeyPrefix: CHANGEME # Optional
-          Logging: CHANGEME # Optional
-      DefaultCapacityProviderStrategy:
-        - Base: 0 # Optional
-          CapacityProvider: CHANGEME # Optional
-          Weight: 0 # Optional
       Tags:
         - Key: CHANGEME
           Value: CHANGEME
