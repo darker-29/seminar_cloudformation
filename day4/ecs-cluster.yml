@@ -15,8 +15,8 @@ Resources:
         - Name: CHANGEME # Optional
           Value: CHANGEME # Optional
       Tags:
-        - Key: CHANGEME
-          Value: CHANGEME
+        - Key: Name
+          Value: !Sub ${Env}-cluster
 
 Outputs:
   ECSCluster:
