@@ -7,7 +7,7 @@ Parameters:
     Default: test
 
 Resources:
-  MyCluster:
+  ECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
       ClusterName: !Sub ${Env}-cluster
@@ -19,6 +19,8 @@ Resources:
           Value: CHANGEME
 
 Outputs:
-  MyClusterArn:
-    Value: !GetAtt MyCluster.Arn
+  ECSCluster:
+    Value: !Ref ECSCluster
+    Export:
+      Name: !Sub ${Env}-cluster
 
