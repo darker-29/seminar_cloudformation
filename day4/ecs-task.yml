@@ -48,13 +48,6 @@ Resources:
               ValueFrom: CHANGEME
           StartTimeout: 0 # Optional
           StopTimeout: 0 # Optional
-          SystemControls: # Optional
-            - Namespace: CHANGEME # Optional
-              Value: CHANGEME # Optional
-          Ulimits: # Optional
-            - HardLimit: 0
-              Name: CHANGEME
-              SoftLimit: 0
           User: CHANGEME # Optional
           VolumesFrom: # Optional
             - ReadOnly: false # Optional
