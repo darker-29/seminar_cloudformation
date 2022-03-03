@@ -57,6 +57,6 @@ Resources:
           Port: 0 # Optional
           RegistryArn: CHANGEME # Optional
       Tags:
-        - Key: CHANGEME
-          Value: CHANGEME
+        - Key: Name
+          Value: !Sub ${Env}-ecs-service
 
