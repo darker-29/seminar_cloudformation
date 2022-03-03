@@ -15,9 +15,6 @@ Resources:
             - CHANGEME
           Cpu: 0 # Optional
           Memory: 0 # Optional
-          DependsOn: # Optional
-            - Condition: CHANGEME # Optional
-              ContainerName: CHANGEME # Optional
           DisableNetworking: false
           DockerSecurityOptions: # Optional
             - CHANGEME
