@@ -6,7 +6,8 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       ContainerDefinitions:
-        - Image:
+        - Name: !Sub ${Env}-web
+          Image:
             Fn::ImportValue:
               !Sub ${Env}-ECRRepository
           Essential: true
@@ -31,7 +32,6 @@ Resources:
             - ContainerPath: CHANGEME # Optional
               ReadOnly: false # Optional
               SourceVolume: CHANGEME # Optional
-          Name: CHANGEME # Optional
           PortMappings: # Optional
             - ContainerPort: 0 # Optional
               HostPort: 0 # Optional
