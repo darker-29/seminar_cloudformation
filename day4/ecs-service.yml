@@ -28,17 +28,27 @@ Resources:
       EnableExecuteCommand: true
       HealthCheckGracePeriodSeconds: 60
       LoadBalancers:
-        - ContainerName: CHANGEME # Optional
-          ContainerPort: 0 # Optional
-          LoadBalancerName: CHANGEME # Optional
-          TargetGroupArn: CHANGEME # Optional
-      NetworkConfiguration: # Optional
-        AwsvpcConfiguration: # Optional
-          AssignPublicIp: CHANGEME # Optional
-          SecurityGroups: # Optional
-            - CHANGEME
-          Subnets: # Optional
-            - CHANGEME
+        - ContainerName:
+            Fn::ImportValue:
+              !Sub ${Env}-web
+          ContainerPort: 80
+          LoadBalancerName:
+            Fn::ImportValue:
+              !Sub ${Env}-ApplicationLoadBalancer
+          TargetGroupArn:
+            Fn::ImportValue:
+              !Sub ${Env}-TargetGroup
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          SecurityGroups:
+            - Fn::ImportValue:
+                !Sub ${Env}-ECSSecutiryGroup
+          Subnets:
+            - Fn::ImportValue:
+                !Sub ${Env}-PrivateSubnet1a
+            - Fn::ImportValue:
+                !Sub ${Env}-PrivateSubnet1c
       Role: CHANGEME # Optional
       ServiceArn: CHANGEME # Optional
       ServiceRegistries:
