@@ -29,7 +29,6 @@ Resources:
               Value: CHANGEME # Optional
           Links: # Optional
             - CHANGEME
-          MemoryReservation: 0 # Optional
           MountPoints: # Optional
             - ContainerPath: CHANGEME # Optional
               ReadOnly: false # Optional
@@ -39,7 +38,6 @@ Resources:
             - ContainerPort: 0 # Optional
               HostPort: 0 # Optional
               Protocol: CHANGEME # Optional
-          Privileged: false # Optional
           ResourceRequirements: # Optional
             - Type: CHANGEME
               Value: CHANGEME
