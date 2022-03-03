@@ -50,12 +50,6 @@ Resources:
             - Fn::ImportValue:
                 !Sub ${Env}-PrivateSubnet1c
       Role: CHANGEME # Optional
-      ServiceArn: CHANGEME # Optional
-      ServiceRegistries:
-        - ContainerName: CHANGEME # Optional
-          ContainerPort: 0 # Optional
-          Port: 0 # Optional
-          RegistryArn: CHANGEME # Optional
       Tags:
         - Key: Name
           Value: !Sub ${Env}-ecs-service
