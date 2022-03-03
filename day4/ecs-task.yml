@@ -17,9 +17,7 @@ Resources:
           DependsOn: # Optional
             - Condition: CHANGEME # Optional
               ContainerName: CHANGEME # Optional
-          DisableNetworking: false # Optional
-          DockerLabels: # Optional
-            CHANGEME: CHANGEME
+          DisableNetworking: false
           DockerSecurityOptions: # Optional
             - CHANGEME
           EntryPoint: # Optional
