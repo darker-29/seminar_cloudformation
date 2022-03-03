@@ -33,9 +33,6 @@ Resources:
             - ContainerPort: 0 # Optional
               HostPort: 0 # Optional
               Protocol: CHANGEME # Optional
-          ResourceRequirements: # Optional
-            - Type: CHANGEME
-              Value: CHANGEME
           Secrets: # Optional
             - Name: CHANGEME
               ValueFrom: CHANGEME
