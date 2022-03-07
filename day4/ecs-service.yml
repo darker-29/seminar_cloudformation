@@ -49,7 +49,6 @@ Resources:
                 !Sub ${Env}-PrivateSubnet1a
             - Fn::ImportValue:
                 !Sub ${Env}-PrivateSubnet1c
-      Role: CHANGEME # Optional
       Tags:
         - Key: Name
           Value: !Sub ${Env}-ecs-service

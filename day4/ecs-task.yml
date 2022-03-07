@@ -10,89 +10,54 @@ Resources:
   MyTaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
+      NetworkMode: awsvpc
+      Cpu: 256
+      Memory: 512
+      ExecutionRoleArn: !Ref ECSTaskExecutionRole
       ContainerDefinitions:
         - Name: !Sub ${Env}-web
           Image:
             Fn::ImportValue:
               !Sub ${Env}-ECRRepository
           Essential: true
-          Command: # Optional
-            - CHANGEME
-          Cpu: 0 # Optional
-          Memory: 0 # Optional
+          Cpu: 256
+          Memory: 512
+          WorkingDirectory: /var/www
           DisableNetworking: false
-          DockerSecurityOptions: # Optional
-            - CHANGEME
-          EntryPoint: # Optional
-            - CHANGEME
-          Environment: # Optional
-            - Name: CHANGEME # Optional
-              Value: CHANGEME # Optional
-          Links: # Optional
-            - CHANGEME
-          MountPoints: # Optional
-            - ContainerPath: CHANGEME # Optional
-              ReadOnly: false # Optional
-              SourceVolume: CHANGEME # Optional
-          PortMappings: # Optional
-            - ContainerPort: 0 # Optional
-              HostPort: 0 # Optional
-              Protocol: CHANGEME # Optional
-          Secrets: # Optional
+          Environment:
+            - Name: APP_ENV
+              Value: !Sub ${Env}
+          PortMappings:
+            - ContainerPort: 80
+              HostPort: 80
+              Protocol: tcp
+          Secrets:
             - Name: CHANGEME
               ValueFrom: CHANGEME
-          StartTimeout: 0 # Optional
-          StopTimeout: 0 # Optional
-          User: CHANGEME # Optional
-          VolumesFrom: # Optional
-            - ReadOnly: false # Optional
-              SourceContainer: CHANGEME # Optional
-          WorkingDirectory: CHANGEME # Optional
-      Cpu: CHANGEME # Optional
-      ExecutionRoleArn: CHANGEME # Optional
-      Family: CHANGEME # Optional
-      InferenceAccelerators:
-        - DeviceName: CHANGEME # Optional
-          DeviceType: CHANGEME # Optional
-      IpcMode: CHANGEME # Optional
-      Memory: CHANGEME # Optional
-      NetworkMode: CHANGEME # Optional
-      PidMode: CHANGEME # Optional
-      PlacementConstraints:
-        - Expression: CHANGEME # Optional
-          Type: CHANGEME
-      ProxyConfiguration: # Optional
-        ContainerName: CHANGEME
-        ProxyConfigurationProperties: # Optional
-          - Name: CHANGEME # Optional
-            Value: CHANGEME # Optional
-        Type: CHANGEME # Optional
-      RequiresCompatibilities:
-        - CHANGEME
+          StartTimeout: 60
+          StopTimeout: 60
       Tags:
-        - Key: CHANGEME
-          Value: CHANGEME
-      TaskRoleArn: CHANGEME # Optional
-      Volumes:
-        - DockerVolumeConfiguration: # Optional
-            Autoprovision: false # Optional
-            Driver: CHANGEME # Optional
-            DriverOpts: # Optional
-              CHANGEME: CHANGEME
-            Labels: # Optional
-              CHANGEME: CHANGEME
-            Scope: CHANGEME # Optional
-          EFSVolumeConfiguration: # Optional
-            AuthorizationConfig: '{"JSON": "CHANGEME"}' # Optional
-            FilesystemId: CHANGEME
-            RootDirectory: CHANGEME # Optional
-            TransitEncryption: CHANGEME # Optional
-            TransitEncryptionPort: 0 # Optional
-          Host: # Optional
-            SourcePath: CHANGEME # Optional
-          Name: CHANGEME # Optional
+        - Key: Name
+          Value: !Sub ${Env}-ecs-task
 
-Outputs:
-  MyTaskDefinitionTaskDefinitionArn:
-    Value: !GetAtt MyTaskDefinition.TaskDefinitionArn
+
+  ECSTaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${Env}-ECSTaskExecutionRole
+      Description: !Sub Role For ${Env} ECSTaskExection
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+      Tags:
+        - Key: Name
+          Value: !Sub ${Env}-ECSTaskExecutionRole
 
